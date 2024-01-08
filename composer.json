@@ -1,0 +1,35 @@
+{
+  "name": "berthott/laravel-hrworks",
+  "description": "An HRWorks API Integration for Laravel",
+  "license": "MIT",
+  "authors": [
+      {
+          "name": "Jan Bladt",
+          "email": "berthott@web.de"
+      }
+  ],
+  "autoload" : {
+      "psr-4" : {
+          "berthott\\HrWorks\\": "src"
+      }
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "berthott\\HrWorks\\Tests\\": "tests"
+      }
+  },
+  "extra" : {
+      "laravel" : {
+          "providers" : [
+              "berthott\\HrWorks\\HrWorksServiceProvider"
+          ]
+      }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^8.0",
+    "phpunit/phpunit": "^10.0"
+  },
+  "require": {
+
+  }
+}
