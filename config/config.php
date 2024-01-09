@@ -1,11 +1,24 @@
 <?php
 
-use HaydenPierce\ClassFinder\ClassFinder;
-
 $apiVersion = env('HRWORKS_API_VERSION', 'v2');
-$baseUrl = env('HRWORKS_BASE_URL', 'api.hrworks.de').'/'.$baseUrl;
+$baseUrl = env('HRWORKS_BASE_URL', 'https://api.hrworks.de').'/'.$apiVersion;
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | HrWorks API Credentials
+    |--------------------------------------------------------------------------
+    |
+    | Defines the HrWorks public access key id and the private secret access key.
+    |
+    */
+
+    'auth' => [
+        'accessKey' => env('HRWORKS_ACCESS_KEY'),
+        'secretAccessKey' => env('HRWORKS_SECRET_ACCESS_KEY'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | API definitions
