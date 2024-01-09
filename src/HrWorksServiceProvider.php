@@ -36,6 +36,14 @@ class HrWorksServiceProvider extends ServiceProvider
             'level' => 'debug',
         ]);
 
+        // publish config
+        $this->publishes([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'migrations');
+
+        // load migrations
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
         // Disable Data Wrapping on resources
         JsonResource::withoutWrapping();
     }

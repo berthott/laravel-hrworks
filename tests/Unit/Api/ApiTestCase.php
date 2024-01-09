@@ -3,11 +3,14 @@
 namespace berthott\HrWorks\Tests\Unit\Api;
 
 use berthott\HrWorks\HrWorksServiceProvider;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class ApiTestCase extends BaseTestCase
 {
+    use DatabaseMigrations;
+
     public function setUp(): void
     {
         parent::setUp();

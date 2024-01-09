@@ -3,6 +3,7 @@
 namespace berthott\HrWorks\Services\Http;
 
 use Facades\berthott\HrWorks\Helpers\HrWorksLog;
+use Facades\berthott\HrWorks\Services\Http\HrWorksAuthService;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 
@@ -36,7 +37,7 @@ class HrWorksApiService
      */
     public function __call(string $name, array $arguments): mixed
     {
-        $arguments = Arr::collapse($arguments);
+        $arguments = $this->setBodyAndHeaders($name, Arr::collapse($arguments));
         [$url , $method] = $this->getUrlAndMethod($name, $arguments);
         HrWorksLog::log("Requesting $method $url...");
         return $this->http()->request($method, $url, $arguments);
@@ -51,11 +52,11 @@ class HrWorksApiService
     }
 
     /**
-     * Get the URL and Method to use.
+     * Get the URL and method to use.
      * 
      * @return string[]
      */
-    private function getUrlAndMethod(string $endpoint, array& $values): array
+    private function getUrlAndMethod(string $endpoint, array $values): array
     {
         $api = config("hrworks.api.{$this->api}");
         $url = $api[$endpoint]['api'];
@@ -73,5 +74,30 @@ class HrWorksApiService
         }
 
         return [$url , $api[$endpoint]['method']];
+    }
+
+    /**
+     * Set body and headers.
+     * 
+     * Ensures that the body is json encoded and that the correct auth header is set.
+     */
+    private function setBodyAndHeaders(string $endpoint, array $arguments): array
+    {
+        // ensure json encoding
+        if (array_key_exists('body', $arguments)) {
+            if (!(is_string($arguments['body']) && json_validate($arguments['body']))) {
+                $arguments['body'] = json_encode($arguments['body']);
+            }
+        }
+
+        // add auth header
+        if ($endpoint != 'authenticate') {
+            $header = array_key_exists('headers', $arguments) ? $arguments['headers'] : [];
+            $token = HrWorksAuthService::token();
+            $header['Authorization'] = "Bearer $token";
+            $arguments['headers'] = $header;
+        }
+
+        return $arguments;
     }
 }
