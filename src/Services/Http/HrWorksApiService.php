@@ -98,6 +98,13 @@ class HrWorksApiService
             $arguments['headers'] = $header;
         }
 
+        // add no cache header
+        if (!config('hrworks.cache_enabled')) {
+            $header = array_key_exists('headers', $arguments) ? $arguments['headers'] : [];
+            $header['Cache-Control'] = 'no-cache';
+            $arguments['headers'] = $header;
+        }
+
         return $arguments;
     }
 }
