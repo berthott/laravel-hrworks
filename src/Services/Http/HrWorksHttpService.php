@@ -2,7 +2,7 @@
 
 namespace berthott\HrWorks\Services\Http;
 
-use Facades\berthott\HrWorks\Services\Http\HrWorksApiService;
+use berthott\HrWorks\Services\Http\HrWorksApiService;
 
 /*
  * Service to distinguish between different HrWorks API endpoints.
@@ -14,6 +14,6 @@ class HrWorksHttpService
 {
     public function __call(string $name, array $arguments): mixed
     {
-        return HrWorksApiService::api($name);
+        return (new HrWorksApiService)->api($name);
     }
 }
