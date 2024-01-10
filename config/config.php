@@ -60,7 +60,7 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/general/organization-units#get-v2-organization-units
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/organization-units",
                 'method' => 'get',
             ],
@@ -88,7 +88,7 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/general/permanent-establishments#get-v2-permanent-establishments
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/permanent-establishments",
                 'method' => 'get',
             ],
@@ -117,7 +117,7 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/general/holidays#get-v2-holidays
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/holidays",
                 'method' => 'get',
             ],
@@ -135,12 +135,12 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/persons/persons#get-v2-persons
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/persons",
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/persons/persons-master-data#get-v2-persons-master-data
-            'indexComplete' => [
+            'allComplete' => [
                 'api' => "{$baseUrl}/persons/master-data",
                 'method' => 'get',
             ],
@@ -210,7 +210,7 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/absences#get-v2-absences
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/absences",
                 'method' => 'get',
             ],
@@ -255,7 +255,7 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/absences/absences-absence-types#get-v2-absences-absence-types
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/absences/absence-types",
                 'method' => 'get',
             ],
@@ -273,7 +273,7 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/absences/remote-work#get-v2-remote-work
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/remote-work",
                 'method' => 'get',
             ],
@@ -313,7 +313,7 @@ return [
                 'method' => 'get',
             ],
             // https://developers.hrworks.de/2.0/endpoints/absences/sick-leaves#get-v2-sick-leaves
-            'index' => [
+            'all' => [
                 'api' => "{$baseUrl}/sick-leaves",
                 'method' => 'get',
             ],
