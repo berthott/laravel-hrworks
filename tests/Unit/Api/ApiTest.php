@@ -12,7 +12,7 @@ class ApiTest extends ApiTestCase
         $response = HrWorksHttpService::utility()->authenticate([
             'body' => config('hrworks.auth')
         ]);
-        $this->assertEquals($response->getStatusCode(), 200);
+        $this->assertNotEmpty($response->token);
     }
 
     public function test_retrieving_auth_token(): void
@@ -25,6 +25,19 @@ class ApiTest extends ApiTestCase
     public function test_authenticated_request(): void
     {
         $response = HrWorksHttpService::utility()->checkHealth();
-        $this->assertEquals($response->getStatusCode(), 200);
+        $this->assertNull($response);
+    }
+
+    public function test_pagination(): void
+    {
+        // precondition for this test is, that the hrworks demo hast more than 50 persons registered
+        $response = HrWorksHttpService::person()->getAvailableWorkingHours([
+            'query' => [
+                'beginDate' => '2024-01-01',
+                'endDate' => '2024-02-29',
+                'interval' => 'months',
+            ]
+        ]);
+        $this->assertGreaterThan(50, count((array)$response));
     }
 }

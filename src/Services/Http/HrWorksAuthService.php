@@ -19,9 +19,9 @@ class HrWorksAuthService
         $token = HrWorksAuthToken::first();
         if (!$token || now()->lte($token->expires_at)) {
             HrWorksAuthToken::truncate();
-            $newToken = json_decode(HrWorksHttpService::utility()->authenticate([
+            $newToken = HrWorksHttpService::utility()->authenticate([
                 'body' => config('hrworks.auth')
-            ])->getBody()->getContents())->token;
+            ])->token;
             $decodedToken = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $newToken)[1]))));
             $token = HrWorksAuthToken::create([
                 'token' => $newToken,

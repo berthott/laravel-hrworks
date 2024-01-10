@@ -5,6 +5,7 @@ namespace berthott\HrWorks\Services\Http;
 use Facades\berthott\HrWorks\Helpers\HrWorksLog;
 use Facades\berthott\HrWorks\Services\Http\HrWorksAuthService;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Header;
 use Illuminate\Support\Arr;
 
 /*
@@ -40,8 +41,39 @@ class HrWorksApiService
         $arguments = $this->setBodyAndHeaders($name, Arr::collapse($arguments));
         [$url , $method] = $this->getUrlAndMethod($name, $arguments);
         HrWorksLog::log("Requesting $method $url...");
-        return $this->http()->request($method, $url, $arguments);
+        return $this->getUnpaginatedResult($method, $url, $arguments);
     }
+    
+    /**
+     * Run the request and repeat it for as long as there are pages left.
+     */
+    private function getUnpaginatedResult($method, $url, $arguments): mixed
+    {   
+        $result = [];
+        $page = 1;
+
+        $stream = $this->http()->request($method, $url, $arguments);
+        $response = json_decode($stream->getBody()->getContents());
+        if (!$response) {
+            return $response;
+        }
+        $result = array_merge($result, (array) $response);
+        $links = Header::parse($stream->getHeader('Link'));
+
+        while($links && count($links) > 1) {
+            // add page to query
+            $query = $arguments['query'] ?? [];
+            $query = array_merge($query, ['page' => ++$page]);
+            $arguments['query'] = $query;
+
+            // resend the request
+            $stream = $this->http()->request($method, $url, $arguments);
+            $result = array_merge($result, (array)json_decode($stream->getBody()->getContents()));
+            $links = Header::parse($stream->getHeader('Link'));
+        }
+        return (object) $result;
+    }
+
     
     /**
      * Create a configured http client.
