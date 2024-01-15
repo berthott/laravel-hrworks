@@ -2,6 +2,7 @@
 
 namespace berthott\HrWorks\Services\Http;
 
+use Exception;
 use Facades\berthott\HrWorks\Helpers\HrWorksLog;
 use Facades\berthott\HrWorks\Services\Http\HrWorksAuthService;
 use GuzzleHttp\Client;
@@ -105,7 +106,7 @@ class HrWorksApiService
         }
 
         if (array_key_exists('body', $values)) {
-            if (!(is_string($values['body']) && json_validate($values['body']))) {
+            if (!(is_string($values['body']) && $this->is_valid_json($values['body']))) {
                 $values['body'] = json_encode($values['body']);
             }
         }
@@ -122,7 +123,7 @@ class HrWorksApiService
     {
         // ensure json encoding
         if (array_key_exists('body', $arguments)) {
-            if (!(is_string($arguments['body']) && json_validate($arguments['body']))) {
+            if (!(is_string($arguments['body']) && $this->is_valid_json($arguments['body']))) {
                 $arguments['body'] = json_encode($arguments['body']);
             }
         }
@@ -143,5 +144,13 @@ class HrWorksApiService
         }
 
         return $arguments;
+    }
+
+    /**
+     * Determine if the given string is valid json
+     */
+    private function is_valid_json(string $json): bool
+    {
+        return (json_decode($json, true) == NULL) ? false : true ;
     }
 }
