@@ -15,7 +15,7 @@ return new class () extends Migration
     {
         Schema::create('hr_works_auth_tokens', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('token');
+            $table->string('token', 500);
             $table->timestamp('expires_at');
             $table->timestamps();
         });
