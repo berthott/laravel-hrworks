@@ -31,7 +31,7 @@ class ApiTest extends ApiTestCase
     public function test_pagination(): void
     {
         // precondition for this test is, that the hrworks demo hast more than 50 persons registered
-        $response = HrWorksHttpService::person()->getAvailableWorkingHours([
+        $response = HrWorksHttpService::persons()->getAvailableWorkingHours([
             'query' => [
                 'beginDate' => '2024-01-01',
                 'endDate' => '2024-02-29',

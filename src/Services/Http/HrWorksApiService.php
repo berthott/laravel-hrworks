@@ -90,8 +90,13 @@ class HrWorksApiService
      */
     private function getUrlAndMethod(string $endpoint, array $values): array
     {
-        $api = config("hrworks.api.{$this->api}");
-        $url = $api[$endpoint]['api'];
+        try {
+            $api = config("hrworks.api.{$this->api}");
+            $url = $api[$endpoint]['api'];
+        } catch(Exception) {
+            throw new Exception('The desired endpoint '.$this->api.'.'.$endpoint.' is not defined.');
+        }
+
 
         foreach ($values as $name => $value) {
             if (is_string($value)) {
