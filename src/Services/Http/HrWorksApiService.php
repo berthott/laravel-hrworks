@@ -57,7 +57,7 @@ class HrWorksApiService
         if (!$response) {
             return $response;
         }
-        $result = array_merge($result, (array) $response);
+        $result += (array) $response;
         $links = Header::parse($stream->getHeader('Link'));
 
         while($links && count($links) > 1) {
@@ -68,7 +68,7 @@ class HrWorksApiService
 
             // resend the request
             $stream = $this->http()->request($method, $url, $arguments);
-            $result = array_merge($result, (array)json_decode($stream->getBody()->getContents()));
+            $result += (array) json_decode($stream->getBody()->getContents());
             $links = Header::parse($stream->getHeader('Link'));
         }
         return (object) $result;
