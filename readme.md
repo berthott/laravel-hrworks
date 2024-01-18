@@ -14,16 +14,21 @@ $ composer require berthott/laravel-hrworks
 
 ## Usage
 
+This package only provides a generic `HrWorksApiService` which an be used to conveniently interact with the HrWorks API. The package will take care of authentication and will store an auth token inside the database.
+
 ## Options
 
 To change the default options use
 ```
-$ php artisan vendor:publish --provider="berthott\SX\SxServiceProvider" --tag="config"
+$ php artisan vendor:publish --provider="berthott\HrWorks\HrWorksServiceProvider" --tag="config"
 ```
-* Inherited from [laravel-targetable](https://docs.syspons-dev.com/laravel-targetable)
-  * `namespace`: String or array with one ore multiple namespaces that should be monitored for the configured trait. Defaults to `App\Models`.
-  * `namespace_mode`: Defines the search mode for the namespaces. `ClassFinder::STANDARD_MODE` will only find the exact matching namespace, `ClassFinder::RECURSIVE_MODE` will find all subnamespaces. Defaults to `ClassFinder::STANDARD_MODE`.
-  * `prefix`: Defines the route prefix. Defaults to `api`.
+* `cache_enabled`: HrWorks will cache it's responses by default. This package disables this by default. Defaults to `false`.
+* `auth`: Array to define `accessKey` and `secretAccessKey` which can be obtained from within the HrWorks application. Defaults to 
+  ```
+  'accessKey' => env('HRWORKS_ACCESS_KEY'),
+  'secretAccessKey' => env('HRWORKS_SECRET_ACCESS_KEY'),
+  ```
+* `api`: Defines the endpoints to the HrWorks Api. Default see `config/config.php`.
 
 ## Compatibility
 
@@ -31,4 +36,4 @@ Tested with Laravel 10.x.
 
 ## License
 
-See [License File](license.md). Copyright © 2023 Jan Bladt.
+See [License File](license.md). Copyright © 2024 Jan Bladt.
