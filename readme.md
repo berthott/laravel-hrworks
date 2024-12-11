@@ -1,10 +1,12 @@
+![test workflow](https://github.com/berthott/laravel-hrworks/actions/workflows/test.yml/badge.svg)
+
 # Laravel-HRWorks
 
-An HRWorks API Integration for Laravel.
+An HrWorks API Integration for Laravel.
 
 ## Requirements
 
-For a connection between HRWorks, it is necessary, to obtain an API token. More information can be found on the [HRWorks API Documentation](https://developers.hrworks.de/).
+For a connection to HrWorks, it is necessary, to obtain an API token. More information can be found on the [HRWorks API Documentation](https://developers.hrworks.de/).
 
 ## Installation
 
